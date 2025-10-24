@@ -1,22 +1,37 @@
-import {type FC, useState} from "react";
+import {type FC, useEffect, useRef, useState} from "react";
 import {Box} from "@mui/material";
 import weatherNowImage from "../images/logo.svg";
 import settingsImage from "../images/icon-units.svg";
 import dropdownImage from "../images/icon-dropdown.svg";
 import successImage from "../images/icon-checkmark.svg";
 import {uiComponents} from "../data/uiComponents.ts";
+//@ts-ignore
+import ScrollReveal from 'scrollreveal';
 
 const {GrayButton, ListTitle, ListSubtitle, UnitsButton} = uiComponents;
 
 const Header: FC = ({setToCelsius, setToFahrenheit, Celsius, Fahrenheit}: any) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const headerRef = useRef(null)
 
     const handleOpen: () => void = (): void => {
         setIsOpen(prev => !prev);
     }
 
+    useEffect(() => {
+        const sr = ScrollReveal({
+            reset: true,
+            distance: '450px'
+        })
+
+        sr.reveal(headerRef.current, {
+            origin: 'top',
+            duration: 1000
+        })
+    }, []);
+
     return (
-        <Box className="header">
+        <Box className="header" ref={headerRef}>
 
             <Box className="header__logo">
 

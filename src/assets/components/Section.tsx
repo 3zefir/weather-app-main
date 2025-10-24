@@ -1,4 +1,4 @@
-import {type FC, useEffect, useState} from 'react';
+import {type FC, useEffect, useRef, useState} from 'react';
 import cloudsImage from "../images/icon-overcast.webp";
 import rainImage from "../images/icon-rain.webp";
 import clearImage from "../images/icon-sunny.webp";
@@ -12,6 +12,8 @@ import searchImage from "../images/icon-search.svg";
 import loadingImage from "../images/icon-loading.svg";
 import dropdownImage from "../images/icon-dropdown.svg";
 import {uiComponents} from "../data/uiComponents.ts";
+//@ts-ignore
+import ScrollReveal from 'scrollreveal';
 
 const {Title, ForecastTitle, ParamsTitle, ParamsInfo, TemperatureTitle, SelectButton, SearchButton, TemperatureParagraph, TemperatureNumber, ForecastTemperature} = uiComponents;
 
@@ -42,12 +44,150 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
     const [eventItem, setEventItem] = useState<string>('monday')
     const weekDays: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const titleRef = useRef(null);
+    const inputRef = useRef(null);
+    const todayRef = useRef(null);
+    const feelsRef = useRef(null);
+    const humidityRef = useRef(null);
+    const windRef = useRef(null);
+    const precipitationRef = useRef(null);
+    const dailyTitleRef = useRef(null);
+    const tueRef = useRef(null)
+    const wedRef = useRef(null)
+    const thuRef = useRef(null)
+    const friRef = useRef(null)
+    const satRef = useRef(null)
+    const sunRef = useRef(null)
+    const monRef = useRef(null)
+    const hourlyForecastRef = useRef(null);
+
+    useEffect(() => {
+        const sr = ScrollReveal({
+            reset: true,
+            distance: '450px'
+        })
+
+        sr.reveal(titleRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 500
+        })
+
+        sr.reveal(inputRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 750
+        })
+
+        sr.reveal(todayRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 1000
+        })
+
+        sr.reveal(feelsRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 1250
+        })
+
+        sr.reveal(humidityRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 1450
+        })
+
+        sr.reveal(windRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 1650
+        })
+
+        sr.reveal(precipitationRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 1850
+        })
+
+        sr.reveal(dailyTitleRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 2200
+        })
+
+        sr.reveal(tueRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 2500
+        })
+
+        sr.reveal(wedRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 2750
+        })
+
+        sr.reveal(thuRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 3000
+        })
+
+        sr.reveal(friRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 3250
+        })
+
+        sr.reveal(satRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 3500
+        })
+
+        sr.reveal(sunRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 3750
+        })
+
+        sr.reveal(monRef.current, {
+            origin: 'bottom',
+            duration: 2000,
+            delay: 4000
+        })
+
+        sr.reveal(hourlyForecastRef.current, {
+            origin: 'right',
+            duration: 2000,
+            delay: 4500
+        })
+    }, []);
 
     useEffect(() => {
         handleWeather()
     }, [Celsius, Fahrenheit]);
 
-    const handleWeatherImage = (weather: string): string | undefined => {
+    const whichWeatherFromDay = (day: string) => {
+        switch (day) {
+            case 'monday':
+                return monWeather;
+            case 'tuesday':
+                return tueWeather;
+            case 'wednes':
+                return wedWeather;
+            case 'thursday':
+                return thuWeather;
+            case 'friday':
+                return friWeather;
+            case 'saturday':
+                return satWeather;
+            case 'sunday':
+                return sunWeather;
+        }
+    }
+
+    const handleWeatherImage = (weather: any) => {
         switch (weather) {
             case 'clouds':
                 return cloudsImage;
@@ -176,7 +316,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
                 <Box className="section">
 
 
-                    <Box className="section__header">
+                    <Box className="section__header" >
 
                         <Title className="header__title--section">How's the sky looking today?</Title>
 
@@ -187,7 +327,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
 
 
-                    <Box className="section__content">
+                    <Box className="section__content" >
 
                         <Box className="content__form">
 
@@ -211,7 +351,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
                 loading ? <Box className="section">
 
 
-                        <Box className="section__header">
+                        <Box className="section__header" ref={titleRef}>
 
                             <Title className="header__title--section">How's the sky looking today?</Title>
 
@@ -222,7 +362,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
 
 
-                        <Box className="section__content">
+                        <Box className="section__content" ref={inputRef}>
 
                             <Box className="content__form">
 
@@ -241,10 +381,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                         <Box className="section__footer">
 
-
-
-
-                            <Box className="footer__today--loading">
+                            <Box className="footer__today--loading" ref={todayRef}>
 
                                 <img src={loadingImage} alt="" className="today__image--loading"/>
                                 <TemperatureParagraph className="today__info--loading">Loading...</TemperatureParagraph>
@@ -257,28 +394,28 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                             <Box className="footer__params">
 
-                                <Box className="params__feels">
+                                <Box className="params__feels" ref={feelsRef}>
 
                                     <ParamsTitle className="feels__title">Feels Like</ParamsTitle>
                                     <ParamsInfo className='feels__info'>---</ParamsInfo>
 
                                 </Box>
 
-                                <Box className="params__humidity">
+                                <Box className="params__humidity" ref={humidityRef}>
 
                                     <ParamsTitle className="humidity__title">Humidity</ParamsTitle>
                                     <ParamsInfo className='humidity__info'>---</ParamsInfo>
 
                                 </Box>
 
-                                <Box className="params__wind">
+                                <Box className="params__wind" ref={windRef}>
 
                                     <ParamsTitle className="wind__title">Wind</ParamsTitle>
                                     <ParamsInfo className='wind__info'>---</ParamsInfo>
 
                                 </Box>
 
-                                <Box className="params__precipitation">
+                                <Box className="params__precipitation" ref={precipitationRef}>
 
                                     <ParamsTitle className="precipitation__title">Precipitation</ParamsTitle>
                                     <ParamsInfo className='precipitation__info'>---</ParamsInfo>
@@ -292,7 +429,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
 
 
-                            <Box className="footer__forecast">
+                            <Box className="footer__forecast" ref={hourlyForecastRef}>
 
                                 <Box className="forecast__header">
 
@@ -352,7 +489,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                             <Box className="footer__daily">
 
-                                <Box className="daily__header">
+                                <Box className="daily__header" ref={dailyTitleRef}>
 
                                     <TemperatureTitle sx={{fontSize: '1.23rem', fontFamily: 'DM Sans'}} className="header__title--daily">Daily forecast</TemperatureTitle>
 
@@ -360,31 +497,31 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                                 <Box className="daily__list">
 
-                                    <Box className="list__item">
+                                    <Box className="list__item" ref={tueRef}>
 
                                     </Box>
 
-                                    <Box className="list__item">
+                                    <Box className="list__item" ref={wedRef}>
 
                                     </Box>
 
-                                    <Box className="list__item">
+                                    <Box className="list__item" ref={thuRef}>
 
                                     </Box>
 
-                                    <Box className="list__item">
+                                    <Box className="list__item" ref={friRef}>
 
                                     </Box>
 
-                                    <Box className="list__item">
+                                    <Box className="list__item" ref={satRef}>
 
                                     </Box>
 
-                                    <Box className="list__item">
+                                    <Box className="list__item" ref={sunRef}>
 
                                     </Box>
 
-                                    <Box className="list__item">
+                                    <Box className="list__item" ref={monRef}>
 
                                     </Box>
 
@@ -401,7 +538,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
                     <Box className="section">
 
 
-                        <Box className="section__header">
+                        <Box className="section__header" >
 
                             <Title className="header__title--section">How's the sky looking today?</Title>
 
@@ -532,7 +669,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                                         <Box className="item__weather">
 
-                                            <img src={handleWeatherImage(tueWeather)} alt="" className="weather__image"/>
+                                            <img src={handleWeatherImage(whichWeatherFromDay(eventItem))} alt="" className="weather__image"/>
                                             <ForecastTitle className="weather__title">3 PM</ForecastTitle>
 
                                         </Box>
@@ -545,7 +682,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                                         <Box className="item__weather">
 
-                                            <img src={handleWeatherImage(tueWeather)} alt="" className="weather__image"/>
+                                            <img src={handleWeatherImage(whichWeatherFromDay(eventItem))} alt="" className="weather__image"/>
                                             <ForecastTitle className="weather__title">4 PM</ForecastTitle>
 
                                         </Box>
@@ -558,7 +695,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                                         <Box className="item__weather">
 
-                                            <img src={handleWeatherImage(tueWeather)} alt="" className="weather__image"/>
+                                            <img src={handleWeatherImage(whichWeatherFromDay(eventItem))} alt="" className="weather__image"/>
                                             <ForecastTitle className="weather__title">5 PM</ForecastTitle>
 
                                         </Box>
@@ -571,7 +708,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                                         <Box className="item__weather">
 
-                                            <img src={handleWeatherImage(tueWeather)} alt="" className="weather__image"/>
+                                            <img src={handleWeatherImage(whichWeatherFromDay(eventItem))} alt="" className="weather__image"/>
                                             <ForecastTitle className="weather__title">6 PM</ForecastTitle>
 
                                         </Box>
@@ -584,7 +721,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                                         <Box className="item__weather">
 
-                                            <img src={handleWeatherImage(tueWeather)} alt="" className="weather__image"/>
+                                            <img src={handleWeatherImage(whichWeatherFromDay(eventItem))} alt="" className="weather__image"/>
                                             <ForecastTitle className="weather__title">7 PM</ForecastTitle>
 
                                         </Box>
@@ -597,7 +734,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                                         <Box className="item__weather">
 
-                                            <img src={handleWeatherImage(tueWeather)} alt="" className="weather__image"/>
+                                            <img src={handleWeatherImage(whichWeatherFromDay(eventItem))} alt="" className="weather__image"/>
                                             <ForecastTitle className="weather__title">8 PM</ForecastTitle>
 
                                         </Box>
@@ -610,7 +747,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                                         <Box className="item__weather">
 
-                                            <img src={handleWeatherImage(tueWeather)} alt="" className="weather__image"/>
+                                            <img src={handleWeatherImage(whichWeatherFromDay(eventItem))} alt="" className="weather__image"/>
                                             <ForecastTitle className="weather__title">9 PM</ForecastTitle>
 
                                         </Box>
@@ -623,7 +760,7 @@ const Section: FC = ({Celsius, Fahrenheit}: any) => {
 
                                         <Box className="item__weather">
 
-                                            <img src={handleWeatherImage(tueWeather)} alt="" className="weather__image"/>
+                                            <img src={handleWeatherImage(whichWeatherFromDay(eventItem))} alt="" className="weather__image"/>
                                             <ForecastTitle className="weather__title">10 PM</ForecastTitle>
 
                                         </Box>
